@@ -1,0 +1,33 @@
+{
+  "id": "c3370f1a-b62e-4b77-a87f-3151b75b062c",
+  "name": "Sofka Backend",
+  "values": [
+    {
+      "key": "ms_cliente_url",
+      "value": "http://localhost:8081",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "ms_cuenta_url",
+      "value": "http://localhost:8082",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "cliente_id",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "numero_cuenta",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2023-11-20T12:00:00.000Z",
+  "_postman_exported_using": "Postman/10.20.1"
+}

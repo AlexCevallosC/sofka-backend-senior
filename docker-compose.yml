@@ -1,0 +1,109 @@
+services:
+  # Base de datos para el microservicio de clientes
+  postgresql-cliente:
+    image: postgres:16.10-alpine
+    container_name: postgresql-db-cliente
+    environment:
+      - POSTGRES_USER=cliente
+      - POSTGRES_PASSWORD=cliente_pass
+      - POSTGRES_DB=cliente_db
+    volumes:
+      - postgres-cliente-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - sofka-network
+
+  # Base de datos para el microservicio de cuentas
+  postgresql-cuenta:
+    image: postgres:15-alpine
+    container_name: postgresql-db-cuenta
+    environment:
+      - POSTGRES_USER=cuenta
+      - POSTGRES_PASSWORD=cuenta_pass
+      - POSTGRES_DB=cuenta_db
+    volumes:
+      - postgres-cuenta-data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - sofka-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+    networks:
+      - sofka-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    networks:
+      - sofka-network
+
+  # Microservicio de clientes
+  ms-cliente:
+    build:
+      context: ./ms-cliente
+      dockerfile: Dockerfile
+    container_name: ms-cliente
+    image: alexandercevallos/ms-cliente:${APP_VERSION:-0.0.1-SNAPSHOT}
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql-cliente:5432/cliente_db
+      - SPRING_DATASOURCE_USERNAME=cliente
+      - SPRING_DATASOURCE_PASSWORD=cliente_pass
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - postgresql-cliente
+      - kafka
+    networks:
+      - sofka-network
+
+  # Microservicio de cuentas
+  ms-cuenta:
+    build:
+      context: ./ms-cuenta
+      dockerfile: Dockerfile
+    container_name: ms-cuenta
+    image: alexandercevallos/ms-cuenta:${APP_VERSION:-0.0.1-SNAPSHOT}
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql-cuenta:5432/cuenta_db
+      - SPRING_DATASOURCE_USERNAME=cuenta
+      - SPRING_DATASOURCE_PASSWORD=cuenta_pass
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_KAFKA_CONSUMER_GROUP_ID=cliente-topic
+    depends_on:
+      - postgresql-cuenta
+      - kafka
+    networks:
+      - sofka-network
+
+networks:
+  sofka-network:
+    driver: bridge
+
+volumes:
+  postgres-cliente-data:
+  postgres-cuenta-data:

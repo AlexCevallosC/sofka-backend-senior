@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "415b3c53-b0e7-4f6c-941f-82717906e578",
+    "name": "Sofka Backend Microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "MS Cliente",
+      "item": [
+        {
+          "name": "Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"Roberto Arboleda\",\n    \"genero\": \"Masculino\",\n    \"edad\": 35,\n    \"identificacion\": \"1054878\",\n    \"direccion\": \"Av. Amazonas\",\n    \"telefono\": \"098547847\",\n    \"contrasena\": \"secure_password_123\",\n    \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{ms_cliente_url}}/api/v1/clientes",
+              "host": [
+                "{{ms_cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clientes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"nombre\": \"Roberto Arboleda\",\n    \"genero\": \"Masculino\",\n    \"edad\": 35,\n    \"identificacion\": \"1054878\",\n    \"direccion\": \"Av. Amazonas\",\n    \"telefono\": \"098547847\",\n    \"contrasena\": \"secure_password_123\",\n    \"estado\": true\n}"
+                },
+                "url": "http://localhost:8081/api/v1/clientes"
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"id\": 1,\n    \"nombre\": \"Roberto Arboleda\",\n    \"genero\": \"Masculino\",\n    \"edad\": 35,\n    \"identificacion\": \"1054878\",\n    \"direccion\": \"Av. Amazonas\",\n    \"telefono\": \"098547847\",\n    \"contrasena\": \"secure_password_123\",\n    \"estado\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Obtener Clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ms_cliente_url}}/api/v1/clientes",
+              "host": [
+                "{{ms_cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clientes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8081/api/v1/clientes"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Roberto Arboleda\",\n        \"genero\": \"Masculino\",\n        \"edad\": 35,\n        \"identificacion\": \"1054878\",\n        \"direccion\": \"Av. Amazonas\",\n        \"telefono\": \"098547847\",\n        \"contrasena\": \"secure_password_123\",\n        \"estado\": true\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar Cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"Roberto Carlos Arboleda\",\n    \"genero\": \"Masculino\",\n    \"edad\": 35,\n    \"identificacion\": \"1054878\",\n    \"direccion\": \"Av. Amazonas y Eloy Alfaro\",\n    \"telefono\": \"098547847\",\n    \"contrasena\": \"secure_password_123\",\n    \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{ms_cliente_url}}/api/v1/clientes/1",
+              "host": [
+                "{{ms_cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clientes",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"nombre\": \"Roberto Carlos Arboleda\",\n    \"genero\": \"Masculino\",\n    \"edad\": 35,\n    \"identificacion\": \"1054878\",\n    \"direccion\": \"Av. Amazonas y Eloy Alfaro\",\n    \"telefono\": \"098547847\",\n    \"contrasena\": \"secure_password_123\",\n    \"estado\": true\n}"
+                },
+                "url": "http://localhost:8081/api/v1/clientes/1"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"id\": 1,\n    \"nombre\": \"Roberto Carlos Arboleda\",\n    \"genero\": \"Masculino\",\n    \"edad\": 35,\n    \"identificacion\": \"1054878\",\n    \"direccion\": \"Av. Amazonas y Eloy Alfaro\",\n    \"telefono\": \"098547847\",\n    \"contrasena\": \"secure_password_123\",\n    \"estado\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar Cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{ms_cliente_url}}/api/v1/clientes/1",
+              "host": [
+                "{{ms_cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clientes",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:8081/api/v1/clientes/1"
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MS Cuenta",
+      "item": [
+        {
+          "name": "Crear Cuenta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoCuenta\": \"Ahorro\",\n    \"saldoInicial\": 2000,\n    \"estado\": true,\n    \"clienteId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{ms_cuenta_url}}/api/v1/cuentas",
+              "host": [
+                "{{ms_cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cuentas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoCuenta\": \"Ahorro\",\n    \"saldoInicial\": 2000,\n    \"estado\": true,\n    \"clienteId\": 1\n}"
+                },
+                "url": "http://localhost:8082/api/v1/cuentas"
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoCuenta\": \"Ahorro\",\n    \"saldoInicial\": 2000,\n    \"estado\": true,\n    \"clienteId\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Registrar Movimiento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoMovimiento\": \"Retiro\",\n    \"valor\": 575\n}"
+            },
+            "url": {
+              "raw": "{{ms_cuenta_url}}/api/v1/movimientos",
+              "host": [
+                "{{ms_cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "movimientos"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoMovimiento\": \"Retiro\",\n    \"valor\": 575\n}"
+                },
+                "url": "http://localhost:8082/api/v1/movimientos"
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"id\": 1,\n    \"fecha\": \"2023-11-20T12:00:00Z\",\n    \"tipoMovimiento\": \"Retiro\",\n    \"valor\": 575,\n    \"saldo\": 1425,\n    \"numeroCuenta\": \"478758\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Generar Reporte",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ms_cuenta_url}}/api/v1/reportes?clienteId=1&fechaInicio=2023-01-01&fechaFin=2023-12-31",
+              "host": [
+                "{{ms_cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reportes"
+              ],
+              "query": [
+                {
+                  "key": "clienteId",
+                  "value": "1"
+                },
+                {
+                  "key": "fechaInicio",
+                  "value": "2023-01-01"
+                },
+                {
+                  "key": "fechaFin",
+                  "value": "2023-12-31"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8082/api/v1/reportes?clienteId=1&fechaInicio=2023-01-01&fechaFin=2023-12-31"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"fecha\": \"2023-11-20T12:00:00Z\",\n    \"clienteNombre\": \"Roberto Arboleda\",\n    \"cuentas\": [\n        {\n            \"numeroCuenta\": \"478758\",\n            \"tipoCuenta\": \"Ahorro\",\n            \"saldoInicial\": 2000,\n            \"estado\": true,\n            \"movimientos\": [\n                {\n                    \"id\": 1,\n                    \"fecha\": \"2023-11-20T12:00:00Z\",\n                    \"tipoMovimiento\": \"Retiro\",\n                    \"valor\": 575,\n                    \"saldo\": 1425,\n                    \"numeroCuenta\": \"478758\"\n                }\n            ]\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

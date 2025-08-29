@@ -1,0 +1,91 @@
+# ===================================================================
+# Archivos de compilación y empaquetado de Java y Maven
+# ===================================================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+build/
+out/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ===================================================================
+# Directorios y archivos de IDEs populares
+# ===================================================================
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Visual Studio Code
+.vscode/
+.history/
+
+# Eclipse
+.classpath
+.project
+.settings/
+.springBeans
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ===================================================================
+# Archivos de sistema operativo
+# ===================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===================================================================
+# Archivos de logs y temporales
+# ===================================================================
+*.log
+logs/
+tmp/
+
+# ===================================================================
+# Dependencias y variables de entorno locales
+# ===================================================================
+# Ignorar el directorio de dependencias de Maven local si se usa
+.mvn/
+mvnw
+mvnw.cmd
+
+# Archivos de variables de entorno locales
+.env
+.env.local
+.env.*.local
+
+# ===================================================================
+# Otros
+# ===================================================================
+# Archivos de configuración de Docker local (si se usan)
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Reportes de cobertura de código
+coverage/
+jacoco/
+*.exec
