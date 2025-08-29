@@ -47,7 +47,6 @@ public class CuentaController {
 		return ResponseEntity.ok(cuentaService.obtenerCuentaPorNumero(id));
 	}
 
-
 	@PostMapping("/cuentas")
 	@Operation(summary = "Crear una nueva cuenta")
 	@ApiResponses(value = {

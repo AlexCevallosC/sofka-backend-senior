@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sofka.commons.model.Cliente;
 import com.sofka.commons.model.Cuenta;
 import com.sofka.commons.model.Movimiento;
-import com.sofka.cuenta.event.ClienteKafkaListener;
 import com.sofka.cuenta.repository.CuentaRepository;
 import com.sofka.cuenta.repository.MovimientoRepository;
 import com.sofka.cuenta.service.dto.ReporteDTO;
@@ -22,6 +21,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Service
 public class CuentaServiceImpl implements ICuentaService {
 
-	private static final Logger LOG = LogManager.getLogger(ClienteKafkaListener.class);
+	private static final Logger LOG = LogManager.getLogger(CuentaServiceImpl.class);
 
 	@Autowired
 	private CuentaRepository cuentaRepository;
@@ -119,11 +119,15 @@ public class CuentaServiceImpl implements ICuentaService {
 		Cliente cliente = obtenerClienteAsincronicamente(clienteId)
 				.orElseThrow(() ->
 						new IllegalArgumentException("El cliente con la identificación " + clienteId + " no existe."));
+		LOG.info("{} | Cliente encontrado -> ", clienteId, cliente);
 
 		List<Cuenta> cuentas = obtenerCuentasPorIdentificacion(clienteId);
+		LOG.info("{} | Cuentas encontradas -> ", clienteId, cuentas);
 
-		LocalDateTime inicio = LocalDateTime.parse(fechaInicio, DateTimeFormatter.ofPattern("yyyy-MM-dd"+"00:00:00"));
-		LocalDateTime fin = LocalDateTime.parse(fechaFin, DateTimeFormatter.ofPattern("yyyy-MM-dd"+"23:59:59"));
+		LocalDateTime inicio = LocalDate.parse(fechaInicio).atStartOfDay();
+		LocalDateTime fin = LocalDate.parse(fechaFin).atTime(23, 59, 59);
+
+		LOG.info("{} | Buscando movimientos de las fechas {} - {}", clienteId, inicio, fin);
 
 		ReporteDTO reporte = new ReporteDTO();
 
@@ -137,31 +141,19 @@ public class CuentaServiceImpl implements ICuentaService {
 					inicio,
 					fin
 			);
+			LOG.info("{} | {} | Movimientos de la cuenta -> {}", clienteId, cuenta, movimientos);
 
-			/*
-			// Mapear la lista de Movimientos a una lista de MovimientoReporte
-			List<ReporteDTO.CuentaReporte> movimientoReportes = movimientos.stream()
-					.map(movimiento -> {
-						ReporteDTO.CuentaReporte rc = new ReporteDTO.CuentaReporte();
-						rc.setNumeroCuenta(cuenta.getNumeroCuenta());
-						rc.setTipoCuenta(cuenta.getTipoCuenta());
-						rc.setSaldoInicial(cuenta.getSaldoInicial());
-						rc.setEstado(cuenta.isEstado());
-						return rc;
-					})
-					.collect(Collectors.toList());
-			*/
 			// Crear y llenar el objeto CuentaReporte
-			ReporteDTO.CuentaReporte cr = new ReporteDTO.CuentaReporte();
-			cr.setNumeroCuenta(cuenta.getNumeroCuenta());
-			cr.setTipoCuenta(cuenta.getTipoCuenta());
-			cr.setSaldoInicial(cuenta.getSaldoInicial());
-			cr.setEstado(cuenta.isEstado());
-			cr.setMovimientos(movimientos);
+			ReporteDTO.CuentaReporte rcr = new ReporteDTO.CuentaReporte();
+			rcr.setNumeroCuenta(cuenta.getNumeroCuenta());
+			rcr.setTipoCuenta(cuenta.getTipoCuenta());
+			rcr.setSaldoInicial(cuenta.getSaldoInicial());
+			rcr.setEstado(cuenta.isEstado());
+			rcr.setMovimientos(movimientos);
 
-			cuentaReportes.add(cr);
+			cuentaReportes.add(rcr);
 		}
-
+		reporte.setCuentas(cuentaReportes);
 		return reporte;
 	}
 
@@ -251,7 +243,6 @@ public class CuentaServiceImpl implements ICuentaService {
 
 			String replyPayload = (String) replyMessage.getPayload();
 
-			// Handling special case for String-wrapped JSON (sometimes from Kafka)
 			String cleanedPayload = replyPayload.replace("\\\"", "\"");
 			if (cleanedPayload.startsWith("\"") && cleanedPayload.endsWith("\"")) {
 				cleanedPayload = cleanedPayload.substring(1, cleanedPayload.length() - 1);
