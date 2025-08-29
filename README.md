@@ -9,6 +9,19 @@ The system is composed of two main microservices:
 
 Data is persisted using **PostgreSQL**, with a clear and relational database schema.
 
+## Prints Open API Specificication (OAS3)
+
+**`ms-cliente`**
+![ms-cliente](images/ms-cliente-image.jpg)
+
+**`ms-cuenta`**
+![ms-cliente](images/ms-cuenta-image.jpg)
+
+**`docker-compose`**
+![docker-compose](images/docker-compose.jpg)
+
+---
+
 ---
 
 ### 🏛️ Architecture
